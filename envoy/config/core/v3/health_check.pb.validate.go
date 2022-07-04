@@ -18,7 +18,7 @@ import (
 
 	"google.golang.org/protobuf/types/known/anypb"
 
-	v3 "github.com/envoyproxy/go-control-plane/envoy/type/v3"
+	typev3 "github.com/envoyproxy/go-control-plane/envoy/type/v3"
 )
 
 // ensure the imports are used
@@ -36,7 +36,7 @@ var (
 	_ = anypb.Any{}
 	_ = sort.Sort
 
-	_ = v3.CodecClientType(0)
+	_ = typev3.CodecClientType(0)
 )
 
 // Validate checks the field values on HealthStatusSet with the rules defined
@@ -1287,7 +1287,7 @@ func (m *HealthCheck_HttpHealthCheck) validate(all bool) error {
 
 	}
 
-	if _, ok := v3.CodecClientType_name[int32(m.GetCodecClientType())]; !ok {
+	if _, ok := typev3.CodecClientType_name[int32(m.GetCodecClientType())]; !ok {
 		err := HealthCheck_HttpHealthCheckValidationError{
 			field:  "CodecClientType",
 			reason: "value must be one of the defined enum values",

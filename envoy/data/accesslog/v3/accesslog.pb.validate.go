@@ -18,7 +18,7 @@ import (
 
 	"google.golang.org/protobuf/types/known/anypb"
 
-	v3 "github.com/envoyproxy/go-control-plane/envoy/config/core/v3"
+	corev3 "github.com/envoyproxy/go-control-plane/envoy/config/core/v3"
 )
 
 // ensure the imports are used
@@ -36,7 +36,7 @@ var (
 	_ = anypb.Any{}
 	_ = sort.Sort
 
-	_ = v3.RequestMethod(0)
+	_ = corev3.RequestMethod(0)
 )
 
 // Validate checks the field values on TCPAccessLogEntry with the rules defined
@@ -1521,7 +1521,7 @@ func (m *HTTPRequestProperties) validate(all bool) error {
 
 	var errors []error
 
-	if _, ok := v3.RequestMethod_name[int32(m.GetRequestMethod())]; !ok {
+	if _, ok := corev3.RequestMethod_name[int32(m.GetRequestMethod())]; !ok {
 		err := HTTPRequestPropertiesValidationError{
 			field:  "RequestMethod",
 			reason: "value must be one of the defined enum values",

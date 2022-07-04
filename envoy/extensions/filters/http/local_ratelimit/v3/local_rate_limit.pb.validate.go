@@ -18,7 +18,7 @@ import (
 
 	"google.golang.org/protobuf/types/known/anypb"
 
-	v3 "github.com/envoyproxy/go-control-plane/envoy/extensions/common/ratelimit/v3"
+	ratelimitv3 "github.com/envoyproxy/go-control-plane/envoy/extensions/common/ratelimit/v3"
 )
 
 // ensure the imports are used
@@ -36,7 +36,7 @@ var (
 	_ = anypb.Any{}
 	_ = sort.Sort
 
-	_ = v3.XRateLimitHeadersRFCVersion(0)
+	_ = ratelimitv3.XRateLimitHeadersRFCVersion(0)
 )
 
 // Validate checks the field values on LocalRateLimit with the rules defined in
@@ -325,7 +325,7 @@ func (m *LocalRateLimit) validate(all bool) error {
 
 	// no validation rules for LocalRateLimitPerDownstreamConnection
 
-	if _, ok := v3.XRateLimitHeadersRFCVersion_name[int32(m.GetEnableXRatelimitHeaders())]; !ok {
+	if _, ok := ratelimitv3.XRateLimitHeadersRFCVersion_name[int32(m.GetEnableXRatelimitHeaders())]; !ok {
 		err := LocalRateLimitValidationError{
 			field:  "EnableXRatelimitHeaders",
 			reason: "value must be one of the defined enum values",

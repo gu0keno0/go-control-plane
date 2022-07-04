@@ -18,7 +18,7 @@ import (
 
 	"google.golang.org/protobuf/types/known/anypb"
 
-	v3 "github.com/envoyproxy/go-control-plane/envoy/config/core/v3"
+	corev3 "github.com/envoyproxy/go-control-plane/envoy/config/core/v3"
 )
 
 // ensure the imports are used
@@ -36,7 +36,7 @@ var (
 	_ = anypb.Any{}
 	_ = sort.Sort
 
-	_ = v3.ApiVersion(0)
+	_ = corev3.ApiVersion(0)
 )
 
 // Validate checks the field values on MetricsServiceConfig with the rules
@@ -101,7 +101,7 @@ func (m *MetricsServiceConfig) validate(all bool) error {
 		}
 	}
 
-	if _, ok := v3.ApiVersion_name[int32(m.GetTransportApiVersion())]; !ok {
+	if _, ok := corev3.ApiVersion_name[int32(m.GetTransportApiVersion())]; !ok {
 		err := MetricsServiceConfigValidationError{
 			field:  "TransportApiVersion",
 			reason: "value must be one of the defined enum values",

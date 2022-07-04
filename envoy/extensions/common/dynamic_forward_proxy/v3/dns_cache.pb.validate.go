@@ -18,7 +18,7 @@ import (
 
 	"google.golang.org/protobuf/types/known/anypb"
 
-	v3 "github.com/envoyproxy/go-control-plane/envoy/config/cluster/v3"
+	clusterv3 "github.com/envoyproxy/go-control-plane/envoy/config/cluster/v3"
 )
 
 // ensure the imports are used
@@ -36,7 +36,7 @@ var (
 	_ = anypb.Any{}
 	_ = sort.Sort
 
-	_ = v3.Cluster_DnsLookupFamily(0)
+	_ = clusterv3.Cluster_DnsLookupFamily(0)
 )
 
 // Validate checks the field values on DnsCacheCircuitBreakers with the rules
@@ -203,7 +203,7 @@ func (m *DnsCacheConfig) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
-	if _, ok := v3.Cluster_DnsLookupFamily_name[int32(m.GetDnsLookupFamily())]; !ok {
+	if _, ok := clusterv3.Cluster_DnsLookupFamily_name[int32(m.GetDnsLookupFamily())]; !ok {
 		err := DnsCacheConfigValidationError{
 			field:  "DnsLookupFamily",
 			reason: "value must be one of the defined enum values",

@@ -18,7 +18,7 @@ import (
 
 	"google.golang.org/protobuf/types/known/anypb"
 
-	v3 "github.com/envoyproxy/go-control-plane/envoy/type/v3"
+	typev3 "github.com/envoyproxy/go-control-plane/envoy/type/v3"
 )
 
 // ensure the imports are used
@@ -36,7 +36,7 @@ var (
 	_ = anypb.Any{}
 	_ = sort.Sort
 
-	_ = v3.RateLimitUnit(0)
+	_ = typev3.RateLimitUnit(0)
 )
 
 // Validate checks the field values on RateLimitDescriptor with the rules
@@ -551,7 +551,7 @@ func (m *RateLimitDescriptor_RateLimitOverride) validate(all bool) error {
 
 	// no validation rules for RequestsPerUnit
 
-	if _, ok := v3.RateLimitUnit_name[int32(m.GetUnit())]; !ok {
+	if _, ok := typev3.RateLimitUnit_name[int32(m.GetUnit())]; !ok {
 		err := RateLimitDescriptor_RateLimitOverrideValidationError{
 			field:  "Unit",
 			reason: "value must be one of the defined enum values",

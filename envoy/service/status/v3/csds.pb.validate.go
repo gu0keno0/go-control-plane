@@ -18,7 +18,7 @@ import (
 
 	"google.golang.org/protobuf/types/known/anypb"
 
-	v3 "github.com/envoyproxy/go-control-plane/envoy/admin/v3"
+	adminv3 "github.com/envoyproxy/go-control-plane/envoy/admin/v3"
 )
 
 // ensure the imports are used
@@ -36,7 +36,7 @@ var (
 	_ = anypb.Any{}
 	_ = sort.Sort
 
-	_ = v3.ClientResourceStatus(0)
+	_ = adminv3.ClientResourceStatus(0)
 )
 
 // Validate checks the field values on ClientStatusRequest with the rules

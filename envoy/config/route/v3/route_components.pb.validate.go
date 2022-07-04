@@ -18,7 +18,7 @@ import (
 
 	"google.golang.org/protobuf/types/known/anypb"
 
-	v3 "github.com/envoyproxy/go-control-plane/envoy/config/core/v3"
+	corev3 "github.com/envoyproxy/go-control-plane/envoy/config/core/v3"
 )
 
 // ensure the imports are used
@@ -36,7 +36,7 @@ var (
 	_ = anypb.Any{}
 	_ = sort.Sort
 
-	_ = v3.RoutingPriority(0)
+	_ = corev3.RoutingPriority(0)
 )
 
 // Validate checks the field values on VirtualHost with the rules defined in
@@ -1194,6 +1194,8 @@ func (m *Route) validate(all bool) error {
 		}
 	}
 
+	// no validation rules for StatPrefix
+
 	switch m.Action.(type) {
 
 	case *Route_Route:
@@ -2103,6 +2105,23 @@ func (m *RouteMatch) validate(all bool) error {
 			errors = append(errors, err)
 		}
 
+	case *RouteMatch_PathTemplate:
+
+		if m.GetPathTemplate() != "" {
+
+			if l := utf8.RuneCountInString(m.GetPathTemplate()); l < 1 || l > 256 {
+				err := RouteMatchValidationError{
+					field:  "PathTemplate",
+					reason: "value length must be between 1 and 256 runes, inclusive",
+				}
+				if !all {
+					return err
+				}
+				errors = append(errors, err)
+			}
+
+		}
+
 	default:
 		err := RouteMatchValidationError{
 			field:  "PathSpecifier",
@@ -2530,6 +2549,21 @@ func (m *RouteAction) validate(all bool) error {
 		}
 	}
 
+	if m.GetPathTemplateRewrite() != "" {
+
+		if l := utf8.RuneCountInString(m.GetPathTemplateRewrite()); l < 1 || l > 256 {
+			err := RouteActionValidationError{
+				field:  "PathTemplateRewrite",
+				reason: "value length must be between 1 and 256 runes, inclusive",
+			}
+			if !all {
+				return err
+			}
+			errors = append(errors, err)
+		}
+
+	}
+
 	// no validation rules for AppendXForwardedHost
 
 	if all {
@@ -2711,7 +2745,7 @@ func (m *RouteAction) validate(all bool) error {
 
 	}
 
-	if _, ok := v3.RoutingPriority_name[int32(m.GetPriority())]; !ok {
+	if _, ok := corev3.RoutingPriority_name[int32(m.GetPriority())]; !ok {
 		err := RouteActionValidationError{
 			field:  "Priority",
 			reason: "value must be one of the defined enum values",
