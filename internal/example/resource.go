@@ -103,6 +103,28 @@ func makeRoute(routeName string, clusterName string) *route.RouteConfiguration {
 	}
 }
 
+func makeVirtualHost(routeName string, hostName string, clusterName string) *route.VirtualHost {
+	name := routeName + "/" + hostName
+	return &route.VirtualHost{
+		Name:    name,
+        Domains: []string{hostName},
+        Routes: []*route.Route{{
+            Match: &route.RouteMatch{
+                PathSpecifier: &route.RouteMatch_Prefix{
+                    Prefix: "/vhds",
+                },
+            },
+            Action: &route.Route_Route{
+                Route: &route.RouteAction{
+                    ClusterSpecifier: &route.RouteAction_Cluster{
+                        Cluster: clusterName,
+                    },
+                },
+			},
+        }},
+	}
+}
+
 func makeHTTPListener(listenerName string, route string) *listener.Listener {
 	// HTTP filter configuration
 	manager := &hcm.HttpConnectionManager{
@@ -171,6 +193,7 @@ func GenerateSnapshot() *cache.Snapshot {
 			resource.ClusterType:  {makeCluster(ClusterName)},
 			resource.RouteType:    {makeRoute(RouteName, ClusterName)},
 			resource.ListenerType: {makeHTTPListener(ListenerName, RouteName)},
+			resource.VirtualHostType: {makeVirtualHost("global", "dynamic", "fortio_http_cluster")},
 		},
 	)
 	return snap
